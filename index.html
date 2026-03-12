@@ -10,9 +10,9 @@
     <main class="app">
       <header class="hero card">
         <div>
-          <p class="kicker">Chemistry 103 • Second Exam</p>
-          <h1>Chemistry Study Hub</h1>
-          <p class="sub">Single-user study guide with saved progress on this device.</p>
+          <p class="kicker">Study Hub • Single User</p>
+          <h1>Chemistry + NURS Study Hub</h1>
+          <p class="sub">Expanded from your packet: Chemistry pages 1–11 + Extra Credit and NURS chapter topics.</p>
         </div>
         <div class="hero-actions">
           <button id="themeToggle" class="btn ghost" type="button">Theme</button>
@@ -28,6 +28,7 @@
           <div><span>Practice Answered</span><strong id="answeredCount">0</strong></div>
           <div><span>Practice Accuracy</span><strong id="accuracyCount">0%</strong></div>
           <div><span>Roadmap Checked</span><strong id="roadmapCheckedCount">0</strong></div>
+          <div><span>NURS Topics Checked</span><strong id="nursCheckedCount">0</strong></div>
           <div><span>Exam Mode Best</span><strong id="examBestCount">0%</strong></div>
           <div><span>Streak</span><strong id="streakCount">1 🔥</strong></div>
         </div>
@@ -38,15 +39,16 @@
         <a class="tab" data-mode="test" href="#test">Practice Test</a>
         <a class="tab" data-mode="exam" href="#exam">Exam Mode</a>
         <a class="tab" data-mode="rapid" href="#rapid">Rapid Review</a>
-        <a class="tab" data-mode="roadmap" href="#roadmap">Roadmap</a>
+        <a class="tab" data-mode="roadmap" href="#roadmap">Chem Roadmap</a>
+        <a class="tab" data-mode="nurs" href="#nurs">NURS Topics</a>
       </nav>
 
       <section id="cardsMode" class="card mode">
         <div class="mode-head">
-          <h2>Flash Cards</h2>
-          <input id="searchInput" type="search" placeholder="Search flash cards..." />
+          <h2>Chemistry Flash Cards</h2>
+          <input id="searchInput" type="search" placeholder="Search chemistry flash cards..." />
         </div>
-        <p class="sub">Click the card to flip. Use next/shuffle to keep practicing.</p>
+        <p class="sub">Click the card to flip. Includes all major prompts from pages 1–11 + extra credit.</p>
         <p id="flashCounter" class="status">0 / 0</p>
         <article id="flashCard" class="flashcard">
           <p id="flashPage" class="kicker"></p>
@@ -101,8 +103,16 @@
       </section>
 
       <section id="roadmapMode" class="card mode hidden">
-        <h2>Roadmap</h2>
+        <h2>Chemistry Roadmap</h2>
         <div id="roadmap" class="roadmap"></div>
+      </section>
+
+      <section id="nursMode" class="card mode hidden">
+        <div class="mode-head">
+          <h2>NURS 203 Topic Checklist</h2>
+          <input id="nursSearchInput" type="search" placeholder="Search NURS topics..." />
+        </div>
+        <div id="nursTopics" class="roadmap"></div>
       </section>
     </main>
 
