@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chemistry 103 Study Hub</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero card">
+        <div>
+          <p class="kicker">Chemistry 103 • Second Exam</p>
+          <h1>Chemistry Study Hub</h1>
+          <p class="sub">Single-user study guide with saved progress on this device.</p>
+        </div>
+        <div class="hero-actions">
+          <button id="themeToggle" class="btn ghost" type="button">Theme</button>
+          <button id="resetProgress" class="btn ghost" type="button">Reset</button>
+        </div>
+      </header>
+
+      <section class="card stats">
+        <h2>Progress</h2>
+        <div class="stats-grid">
+          <div><span>Reviewed Cards</span><strong id="reviewedCount">0</strong></div>
+          <div><span>Confident Cards</span><strong id="confidentCount">0</strong></div>
+          <div><span>Practice Answered</span><strong id="answeredCount">0</strong></div>
+          <div><span>Practice Accuracy</span><strong id="accuracyCount">0%</strong></div>
+          <div><span>Roadmap Checked</span><strong id="roadmapCheckedCount">0</strong></div>
+          <div><span>Streak</span><strong id="streakCount">1 🔥</strong></div>
+        </div>
+      </section>
+
+      <nav class="card mode-tabs" aria-label="Study modes">
+        <a class="tab active" data-mode="cards" href="#cards">Question Cards</a>
+        <a class="tab" data-mode="test" href="#test">Practice Test</a>
+        <a class="tab" data-mode="rapid" href="#rapid">Rapid Review</a>
+        <a class="tab" data-mode="roadmap" href="#roadmap">Roadmap</a>
+      </nav>
+
+      <section id="cardsMode" class="card mode">
+        <div class="mode-head">
+          <h2>Question Cards</h2>
+          <input id="searchInput" type="search" placeholder="Search question cards..." />
+        </div>
+        <div id="cardsList" class="grid"></div>
+      </section>
+
+      <section id="testMode" class="card mode hidden">
+        <h2>Practice Test</h2>
+        <p class="sub">Choose the best answer and get immediate feedback.</p>
+        <div id="testList" class="grid"></div>
+      </section>
+
+      <section id="rapidMode" class="card mode hidden">
+        <div class="mode-head">
+          <h2>Rapid Review</h2>
+          <button id="nextRapid" class="btn" type="button">Next Prompt</button>
+        </div>
+        <p><strong>Timer:</strong> <span id="rapidTimer">0.0s</span></p>
+        <article class="item">
+          <h3 id="rapidPage"></h3>
+          <p id="rapidPrompt"></p>
+          <button id="revealRapid" class="btn ghost" type="button">Reveal Answer</button>
+          <p id="rapidAnswer" class="status"></p>
+        </article>
+      </section>
+
+      <section id="roadmapMode" class="card mode hidden">
+        <h2>Roadmap</h2>
+        <div id="roadmap" class="roadmap"></div>
+      </section>
+    </main>
+
+    <template id="cardTemplate">
+      <article class="item">
+        <h3 class="page"></h3>
+        <p class="prompt"></p>
+        <button class="btn ghost reveal-answer" type="button">Reveal Answer</button>
+        <p class="answer hidden"></p>
+        <div class="row">
+          <button class="btn good" type="button">Confident</button>
+          <button class="btn warn" type="button">Review Again</button>
+        </div>
+        <p class="status"></p>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
