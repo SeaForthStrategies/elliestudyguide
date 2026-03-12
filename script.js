@@ -16,31 +16,57 @@ const practiceTest = [
     page: "Page 2",
     question: "Which is NOT an amphetamine?",
     options: ["A) Meth", "B) Caffeine", "C) Adderall", "D) Ritalin", "E) Ephedra"],
-    answer: "B) Caffeine"
+    answer: "B) Caffeine",
+    explain: "Caffeine is a stimulant but not an amphetamine."
   },
   {
     page: "Page 2",
     question: "Which is NOT a narcotic pain killer?",
     options: ["A) Morphine", "B) Demerol", "C) Percocet", "D) Advil", "E) Oxycontin"],
-    answer: "D) Advil"
+    answer: "D) Advil",
+    explain: "Advil (ibuprofen) is an NSAID, not an opioid narcotic."
   },
   {
     page: "Page 2",
     question: "Patients with Parkinson's disease have too little ____.",
     options: ["A) Acetylcholine", "B) Dopamine", "C) GABA", "D) Histamine", "E) Serotonin"],
-    answer: "B) Dopamine"
+    answer: "B) Dopamine",
+    explain: "Parkinson's is linked to dopamine deficiency in key brain pathways."
   },
   {
     page: "Page 6",
     question: "Which smells the best?",
     options: ["A) Amines", "B) Esters", "C) Alcohols", "D) Amides"],
-    answer: "B) Esters"
+    answer: "B) Esters",
+    explain: "Esters are often associated with sweet/fruity smells."
   },
   {
     page: "Page 6",
     question: "Which smells the worst?",
     options: ["A) Amines", "B) Esters", "C) Alcohols", "D) Amides"],
-    answer: "A) Amines"
+    answer: "A) Amines",
+    explain: "Amines are commonly associated with fishy/pungent odors."
+  },
+  {
+    page: "Page 7",
+    question: "Which sugar is in RNA?",
+    options: ["A) Glucose", "B) Ribose", "C) Fructose", "D) Galactose"],
+    answer: "B) Ribose",
+    explain: "RNA contains ribose; DNA contains deoxyribose."
+  },
+  {
+    page: "Page 7",
+    question: "Blood sugar (dextrose) is:",
+    options: ["A) Fructose", "B) Ribose", "C) Glucose", "D) Maltose"],
+    answer: "C) Glucose",
+    explain: "Dextrose is the D-form of glucose."
+  },
+  {
+    page: "Page 8",
+    question: "Starting materials for photosynthesis include:",
+    options: ["A) O2 + glucose", "B) CO2 + H2O + light", "C) H2 + O2", "D) ATP only"],
+    answer: "B) CO2 + H2O + light",
+    explain: "Photosynthesis uses carbon dioxide and water driven by light energy."
   }
 ];
 
@@ -55,14 +81,18 @@ const state = loadState();
 let rapidIndex = 0;
 let rapidStart = Date.now();
 let rapidTimer = null;
+let examTimer = null;
+let examSecondsLeft = 900;
 
 function loadState() {
   const base = {
     cardStatus: {},
     testAnswers: {},
+    examAnswers: {},
     roadmapChecks: {},
     streak: 1,
     darkMode: false,
+    examBest: 0,
     lastDay: ""
   };
 
@@ -97,7 +127,7 @@ function resetProgress() {
 
 function getModeFromHash() {
   const value = (window.location.hash || "#cards").replace("#", "").toLowerCase();
-  const valid = ["cards", "test", "rapid", "roadmap"];
+  const valid = ["cards", "test", "exam", "rapid", "roadmap"];
   return valid.includes(value) ? value : "cards";
 }
 
@@ -136,6 +166,7 @@ function updateProgress() {
   document.getElementById("answeredCount").textContent = String(answered);
   document.getElementById("accuracyCount").textContent = `${accuracy}%`;
   document.getElementById("roadmapCheckedCount").textContent = String(roadmapChecked);
+  document.getElementById("examBestCount").textContent = `${state.examBest}%`;
   document.getElementById("streakCount").textContent = `${state.streak} 🔥`;
 }
 
@@ -225,10 +256,96 @@ function renderPracticeTest() {
       result.className = `status ${isCorrect ? "learned" : "review"}`;
       result.textContent = isCorrect ? `Correct: ${q.answer}` : `Correct answer: ${q.answer}`;
       box.appendChild(result);
+
+      const explain = document.createElement("p");
+      explain.className = "sub";
+      explain.textContent = q.explain;
+      box.appendChild(explain);
     }
 
     root.appendChild(box);
   });
+}
+
+function formatExamTime() {
+  const min = String(Math.floor(examSecondsLeft / 60)).padStart(2, "0");
+  const sec = String(examSecondsLeft % 60).padStart(2, "0");
+  document.getElementById("examTimer").textContent = `${min}:${sec}`;
+}
+
+function renderExamMode(showResults = false) {
+  const root = document.getElementById("examList");
+  root.innerHTML = "";
+
+  practiceTest.forEach((q, i) => {
+    const box = document.createElement("article");
+    box.className = "item";
+    box.innerHTML = `<h3>Q${i + 1}. ${q.question}</h3>`;
+
+    q.options.forEach((opt) => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-option";
+      btn.type = "button";
+      btn.textContent = opt;
+
+      const chosen = state.examAnswers[i] === opt;
+      if (chosen) btn.classList.add("selected");
+      if (showResults && opt === q.answer) btn.classList.add("correct");
+      if (showResults && chosen && opt !== q.answer) btn.classList.add("wrong");
+
+      btn.addEventListener("click", () => {
+        if (showResults) return;
+        state.examAnswers[i] = opt;
+        saveState();
+        renderExamMode(false);
+      });
+
+      box.appendChild(btn);
+    });
+
+    if (showResults) {
+      const result = document.createElement("p");
+      const isCorrect = state.examAnswers[i] === q.answer;
+      result.className = `status ${isCorrect ? "learned" : "review"}`;
+      result.textContent = isCorrect ? "Correct" : `Correct answer: ${q.answer}`;
+      box.appendChild(result);
+    }
+
+    root.appendChild(box);
+  });
+}
+
+function startExam() {
+  clearInterval(examTimer);
+  examSecondsLeft = 900;
+  state.examAnswers = {};
+  saveState();
+  formatExamTime();
+  renderExamMode(false);
+  document.getElementById("examStatus").textContent = "Exam started. Submit anytime.";
+
+  examTimer = setInterval(() => {
+    examSecondsLeft -= 1;
+    formatExamTime();
+    if (examSecondsLeft <= 0) {
+      submitExam();
+    }
+  }, 1000);
+}
+
+function submitExam() {
+  clearInterval(examTimer);
+  const total = practiceTest.length;
+  const correct = practiceTest.filter((q, i) => state.examAnswers[i] === q.answer).length;
+  const score = Math.round((correct / total) * 100);
+
+  document.getElementById("examStatus").textContent = `Submitted. Score: ${correct}/${total} (${score}%).`;
+  if (score > state.examBest) {
+    state.examBest = score;
+    saveState();
+  }
+  renderExamMode(true);
+  updateProgress();
 }
 
 function renderRoadmap() {
@@ -265,6 +382,7 @@ function updateRapidPrompt() {
   document.getElementById("rapidPage").textContent = card.page;
   document.getElementById("rapidPrompt").textContent = card.prompt;
   document.getElementById("rapidAnswer").textContent = `Answer: ${card.answer}`;
+  document.getElementById("rapidAnswer").classList.add("hidden");
 }
 
 function startRapidTimer() {
@@ -312,14 +430,19 @@ function setupUI() {
   document.getElementById("revealRapid").addEventListener("click", () => {
     document.getElementById("rapidAnswer").classList.toggle("hidden");
   });
+
+  document.getElementById("startExam").addEventListener("click", startExam);
+  document.getElementById("submitExam").addEventListener("click", submitExam);
 }
 
 setDailyStreak();
 setupUI();
 renderCards();
 renderPracticeTest();
+renderExamMode(false);
 renderRoadmap();
 updateRapidPrompt();
 startRapidTimer();
+formatExamTime();
 switchMode(getModeFromHash());
 updateProgress();

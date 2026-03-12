@@ -28,6 +28,7 @@
           <div><span>Practice Answered</span><strong id="answeredCount">0</strong></div>
           <div><span>Practice Accuracy</span><strong id="accuracyCount">0%</strong></div>
           <div><span>Roadmap Checked</span><strong id="roadmapCheckedCount">0</strong></div>
+          <div><span>Exam Mode Best</span><strong id="examBestCount">0%</strong></div>
           <div><span>Streak</span><strong id="streakCount">1 🔥</strong></div>
         </div>
       </section>
@@ -35,6 +36,7 @@
       <nav class="card mode-tabs" aria-label="Study modes">
         <a class="tab active" data-mode="cards" href="#cards">Question Cards</a>
         <a class="tab" data-mode="test" href="#test">Practice Test</a>
+        <a class="tab" data-mode="exam" href="#exam">Exam Mode</a>
         <a class="tab" data-mode="rapid" href="#rapid">Rapid Review</a>
         <a class="tab" data-mode="roadmap" href="#roadmap">Roadmap</a>
       </nav>
@@ -53,6 +55,20 @@
         <div id="testList" class="grid"></div>
       </section>
 
+      <section id="examMode" class="card mode hidden">
+        <div class="mode-head">
+          <h2>Exam Mode (timed practice test)</h2>
+          <div class="row">
+            <button id="startExam" class="btn" type="button">Start Exam</button>
+            <button id="submitExam" class="btn ghost" type="button">Submit</button>
+          </div>
+        </div>
+        <p class="sub">15-minute timed set. Pick all answers, then submit to review missed questions.</p>
+        <p><strong>Time Left:</strong> <span id="examTimer">15:00</span></p>
+        <p id="examStatus" class="status">Not started.</p>
+        <div id="examList" class="grid"></div>
+      </section>
+
       <section id="rapidMode" class="card mode hidden">
         <div class="mode-head">
           <h2>Rapid Review</h2>
@@ -63,7 +79,7 @@
           <h3 id="rapidPage"></h3>
           <p id="rapidPrompt"></p>
           <button id="revealRapid" class="btn ghost" type="button">Reveal Answer</button>
-          <p id="rapidAnswer" class="status"></p>
+          <p id="rapidAnswer" class="status hidden"></p>
         </article>
       </section>
 

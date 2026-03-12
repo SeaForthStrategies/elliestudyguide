@@ -144,3 +144,5 @@ body.dark .roadmap-group { background: #262f52; }
   .mode-head { flex-direction: column; align-items: stretch; }
   .hero { flex-direction: column; align-items: flex-start; }
 }
+
+#examStatus { margin-bottom: 10px; }
