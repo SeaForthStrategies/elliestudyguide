@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chemistry 103 Study Hub</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero card">
+        <div>
+          <p class="kicker">Chemistry 103 • Second Exam</p>
+          <h1>💖 Chemistry Glow Study Lounge</h1>
+          <p class="sub">Built only from your uploaded document wording. No login required.</p>
+        </div>
+        <button id="themeToggle" class="btn ghost" type="button">🌙 Theme</button>
+      </header>
+
+      <section class="card stats">
+        <h2>Progress</h2>
+        <div class="stats-grid">
+          <div><span>Questions Reviewed</span><strong id="reviewedCount">0</strong></div>
+          <div><span>Marked Confident</span><strong id="confidentCount">0</strong></div>
+          <div><span>Practice Test Answered</span><strong id="answeredCount">0</strong></div>
+          <div><span>Streak</span><strong id="streakCount">1 🔥</strong></div>
+        </div>
+        <p id="coachText" class="coach">Tip: mark what you know, then revisit uncertain prompts.</p>
+      </section>
+
+      <section class="card mode-tabs">
+        <button class="tab active" data-mode="cards" type="button">🃏 Question Cards</button>
+        <button class="tab" data-mode="test" type="button">📝 Practice Test</button>
+        <button class="tab" data-mode="rapid" type="button">⚡ Rapid Review</button>
+        <button class="tab" data-mode="roadmap" type="button">🗺️ Roadmap</button>
+      </section>
+
+      <section id="cardsMode" class="card mode active-mode">
+        <div class="mode-head">
+          <h2>Question Cards (verbatim prompts)</h2>
+          <input id="searchInput" type="search" placeholder="Search by keyword or page..." />
+        </div>
+        <div id="cardsList" class="grid"></div>
+      </section>
+
+      <section id="testMode" class="card mode hidden">
+        <h2>Practice Test (No answer key embedded)</h2>
+        <p>Choose what you think is correct based on your class notes. This mode tracks completion, not correctness.</p>
+        <div id="testList" class="grid"></div>
+      </section>
+
+      <section id="rapidMode" class="card mode hidden">
+        <div class="mode-head">
+          <h2>Rapid Review</h2>
+          <button id="nextRapid" class="btn" type="button">Next Prompt</button>
+        </div>
+        <p><strong>Timer:</strong> <span id="rapidTimer">0.0s</span></p>
+        <article class="item">
+          <h3 id="rapidPage"></h3>
+          <p id="rapidPrompt"></p>
+          <p class="sub">Say your answer out loud, then click Next Prompt.</p>
+        </article>
+      </section>
+
+      <section id="roadmapMode" class="card mode hidden">
+        <h2>Roadmap (from document sections)</h2>
+        <div id="roadmap" class="roadmap"></div>
+      </section>
+    </main>
+
+    <template id="cardTemplate">
+      <article class="item">
+        <h3 class="page"></h3>
+        <p class="prompt"></p>
+        <p class="source-note">Source: Uploaded Chemistry 103 exam pages.</p>
+        <div class="row">
+          <button class="btn good" type="button">✅ Confident</button>
+          <button class="btn warn" type="button">🔁 Review Again</button>
+        </div>
+        <p class="status"></p>
+      </article>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
