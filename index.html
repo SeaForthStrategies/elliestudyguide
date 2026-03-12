@@ -34,7 +34,7 @@
       </section>
 
       <nav class="card mode-tabs" aria-label="Study modes">
-        <a class="tab active" data-mode="cards" href="#cards">Question Cards</a>
+        <a class="tab active" data-mode="cards" href="#cards">Flash Cards</a>
         <a class="tab" data-mode="test" href="#test">Practice Test</a>
         <a class="tab" data-mode="exam" href="#exam">Exam Mode</a>
         <a class="tab" data-mode="rapid" href="#rapid">Rapid Review</a>
@@ -43,10 +43,27 @@
 
       <section id="cardsMode" class="card mode">
         <div class="mode-head">
-          <h2>Question Cards</h2>
-          <input id="searchInput" type="search" placeholder="Search question cards..." />
+          <h2>Flash Cards</h2>
+          <input id="searchInput" type="search" placeholder="Search flash cards..." />
         </div>
-        <div id="cardsList" class="grid"></div>
+        <p class="sub">Click the card to flip. Use next/shuffle to keep practicing.</p>
+        <p id="flashCounter" class="status">0 / 0</p>
+        <article id="flashCard" class="flashcard">
+          <p id="flashPage" class="kicker"></p>
+          <p id="flashFront" class="flash-face"></p>
+          <p id="flashBack" class="flash-face hidden"></p>
+        </article>
+        <div class="row">
+          <button id="flashPrev" class="btn ghost" type="button">Prev</button>
+          <button id="flashFlip" class="btn" type="button">Flip</button>
+          <button id="flashNext" class="btn ghost" type="button">Next</button>
+          <button id="flashShuffle" class="btn ghost" type="button">Shuffle</button>
+        </div>
+        <div class="row">
+          <button id="markConfident" class="btn good" type="button">Confident</button>
+          <button id="markReview" class="btn warn" type="button">Review Again</button>
+          <p id="flashStatus" class="status"></p>
+        </div>
       </section>
 
       <section id="testMode" class="card mode hidden">
@@ -88,20 +105,6 @@
         <div id="roadmap" class="roadmap"></div>
       </section>
     </main>
-
-    <template id="cardTemplate">
-      <article class="item">
-        <h3 class="page"></h3>
-        <p class="prompt"></p>
-        <button class="btn ghost reveal-answer" type="button">Reveal Answer</button>
-        <p class="answer hidden"></p>
-        <div class="row">
-          <button class="btn good" type="button">Confident</button>
-          <button class="btn warn" type="button">Review Again</button>
-        </div>
-        <p class="status"></p>
-      </article>
-    </template>
 
     <script src="script.js"></script>
   </body>

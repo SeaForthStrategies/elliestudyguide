@@ -81,6 +81,20 @@ input[type="search"] {
 body.dark input[type="search"] { background: #1f2744; }
 
 .grid { display: grid; gap: 10px; }
+
+.flashcard {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+  background: linear-gradient(165deg, #fff, #f7f9ff);
+  min-height: 210px;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+body.dark .flashcard { background: linear-gradient(165deg, #29345d, #232c4f); }
+.flash-face { margin: 0; font-size: 1.15rem; line-height: 1.5; }
 .item {
   border: 1px solid var(--line);
   border-radius: 12px;
